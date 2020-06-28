@@ -3,8 +3,10 @@
 
 function generateMarkdown(data) {
   return ` 
-  # ${data.title} [![Website shields.io](https://img.shields.io/website-up-down-green-red/http/${data.username}.github.io/${data.title}.svg)](http:///${data.username}.github.io/dog-date/) [![GitHub last commit](https://img.shields.io/github/last-commit//${data.username}/${data.title})
-](https://github.com//${data.username}/${data.title}/graphs/commit-activity) [![GitHub contributors](https://img.shields.io/github/contributors//${data.username}/${data.title})](https://github.com//${data.username}/${data.title}/graphs/contributors)
+
+ # ${data.title}  
+
+ [![npm](https://badge.fury.io/js/inquirer.svg)](http://badge.fury.io/js/inquirer)
 
  ${data.license}
 
@@ -17,8 +19,6 @@ function generateMarkdown(data) {
  <summary>Table of Contents</summary>
 
  <p>
- If your content is not too long, you can delete this section. 
-
  - [Installation](#installation)
  - [Usage]](#usage)
  - [License](#license)
@@ -37,11 +37,6 @@ ${data.installation}
 
 ${data.usage}
 
-## License 
-
-${data.license}
-
-
 ## Contributing 
 
 ${data.contributing}
@@ -52,8 +47,15 @@ ${data.test}
 
 ## Questions
 
-If you have any questions or spot a bug, please reach out to ${data.email} 
+If you have any questions about this project or would like to report a bug, please email ${data.email} 
 
+## License 
+
+The following licenses were used for this project: 
+
+\
+${data.license}
+- Find out more about this license and others at https://choosealicense.com/
 
 `;
 }

@@ -1,61 +1,50 @@
-// // array of questions for user
 const fs = require("fs");
 const inquirer = require("inquirer");
-// const validateEmail = require("email-validator");
-// const questionFile = require('./questions.js');
 const generateMarkdown = require("./Develop/utils/generateMarkdown.js");
 
+// array of questions for user
 const questions = [
   {
     type: "input",
     name: "title",
-    message: "Title for your README:",
-    validate: function (text) {
-      if (text.trim().length < 1) {
-        return "You must enter a title for your document.";
-      }
-      return true;
+    message: "Title for your project:",
+    validate:validateInput
     },
-  },
+  
   {
     type: "input",
     name: "description",
-    message: "Please write a description for your README:",
+    message: "Description for your project:",
     validate: validateInput,
   },
   {
     type: "input",
-    name: "content",
-    message: "If your README is very long, please add a Table of Content:",
-  },
-  {
-    type: "input",
     name: "installation",
-    message: "Installation notes:",
+    message: "Instructions for installing your application:",
     validate: validateInput,
   },
   {
     type: "input",
     name: "usage",
-    message: "Enter instructions for using your application:",
+    message: "Provide instructions for how to use your application. Add images when applicable.",
     validate: validateInput,
   },
   {
     type: "list",
     name: "license",
-    message: "License:",
+    message: "Select the license you would like to use for your project:",
     choices: ["MIT", "ODbL", "Mozilla"],
   },
   {
     type: "input",
     name: "contributing",
-    message: "Instructions for contributing to your project:",
+    message: "How can someone contribute to your project:",
     validate: validateInput,
   },
   {
     type: "input",
     name: "test",
-    message: "Please explain testing procedures and enter any testing code:",
+    message: "Please provide testing procedures and enter any testing code:",
     validate: validateInput,
   },
   {
@@ -85,49 +74,47 @@ const questions = [
   },
 ];
 
+// Function to initialize program
+function init() {
+  inquirer.prompt(questions).then(function (answer) {
+    //License badge options
+
+    switch (answer.license) {
+      case "MIT":
+        answer.license =
+          "[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)";
+        break;
+      case "Mozilla":
+        answer.license =
+          "[![License: MPL 2.0](https://img.shields.io/badge/License-MPL%202.0-brightgreen.svg)]";
+        break;
+      case "ODbL":
+        answer.license =
+          "[![License: ODbL](https://img.shields.io/badge/License-ODbL-brightgreen.svg)]";
+        break;
+    }
+
+    // To write readme
+    const readmeText = generateMarkdown(answer);
+
+    fs.writeFile("readme.md", readmeText, "utf8", function (err) {
+      if (err) {
+        console.log("Something went wrong. Unable to generate README file at this time.", err);
+      }
+      return true;
+    });
+  });
+}
+
+//Function call to initialize program
+init();
+
+// Function to validate user input
 function validateInput(value) {
   if (value.length < 1) {
-    return "Please enter a valid description.";
+    return "This cannot be blank. Please enter a valid input.";
   }
   return true;
 }
-
-inquirer.prompt(questions).then(function (answer) {
-  console.log("these r our answers", answer);
-  switch (answer.license) {
-    case "MIT":
-      console.log("GET THE MIT LINK!!");
-      answer.license =
-        "[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)";
-      break;
-    case "Mozilla":
-      console.log("GET THE Mozila LINK!!");
-      answer.license = "[![License: MPL 2.0](https://img.shields.io/badge/License-MPL%202.0-brightgreen.svg)]";
-      break;
-    case "ODbL":
-      console.log("GET THE OPEN LINK!!");
-      answer.license = "[![License: ODbL](https://img.shields.io/badge/License-ODbL-brightgreen.svg)]";
-      break;
-  }
-
-  var readmeText = generateMarkdown(answer);
-
-  console.log("read me text working ??", readmeText);
-  fs.writeFile("readme.md", readmeText, "utf8", function (err) {
-      if(err) {
-    console.log("err ??", err);
-      } return true;
-  });
-});
-
-// // function to initialize program
-// function init() {
-
-// }
-
-// // function call to initialize program
-// init();
-
-// Function to validate user input
 
 module.exports = questions;
