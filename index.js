@@ -2,7 +2,7 @@ const fs = require("fs");
 const inquirer = require("inquirer");
 const generateMarkdown = require("./Develop/utils/generateMarkdown.js");
 
-// array of questions for user
+// Array of questions for user
 const questions = [
   {
     type: "input",
@@ -94,10 +94,10 @@ function init() {
         break;
     }
 
-    // To write readme
+    // Function to write README file
     const readmeText = generateMarkdown(answer);
 
-    fs.writeFile("readme.md", readmeText, "utf8", function (err) {
+    fs.writeFile("Develop/README.md", readmeText, "utf8", function (err) {
       if (err) {
         console.log("Something went wrong. Unable to generate README file at this time.", err);
       }
