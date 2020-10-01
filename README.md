@@ -77,5 +77,3 @@ unction of it. This is how you will communicate to potential employers/other dev
 ## Application Demo
 
 ![](Develop/assets/demo/readme-generator-walkthrough.gif)
-
-![](Develop/assets/img/readme-generator-CLI.jpg)
